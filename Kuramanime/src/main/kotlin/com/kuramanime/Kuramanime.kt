@@ -33,11 +33,11 @@ class Kuramanime : MainAPI() {
 
     override val mainPage =
             mainPageOf(
-                    "$mainUrl/quick/ongoing?order_by=updated&page=" to "Sedang Tayang",
-                    "$mainUrl/quick/finished?order_by=updated&page=" to "Selesai Tayang",
+                    "$mainUrl/anime/ongoing?order_by=updated&page=" to "Sedang Tayang",
+                    "$mainUrl/anime/finished?order_by=updated&page=" to "Selesai Tayang",
                     "$mainUrl/properties/season/summer-2022?order_by=most_viewed&page=" to
                             "Dilihat Terbanyak Musim Ini",
-                    "$mainUrl/quick/movie?order_by=updated&page=" to "Film Layar Lebar",
+                    "$mainUrl/anime/movie?order_by=updated&page=" to "Film Layar Lebar",
             )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {

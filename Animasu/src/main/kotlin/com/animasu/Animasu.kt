@@ -9,7 +9,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
 class Animasu : MainAPI() {
-    override var mainUrl = "https://v9.animasu.cc"
+    override var mainUrl = "https://v1.animasu.top/"
     override var name = "Animasu"
     override val hasMainPage = true
     override var lang = "id"
@@ -166,6 +166,9 @@ class Animasu : MainAPI() {
                         type = ExtractorLinkType.M3U8
                     )
                 )
+            } else if (link.contains("mega.nz")) {
+                val extractor = MegaNzExtractor()
+                extractor.getUrl(link, data, subtitleCallback, callback)
             } else {
                 loadExtractor(link, data, subtitleCallback, callback)
             }

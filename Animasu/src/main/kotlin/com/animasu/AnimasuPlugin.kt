@@ -14,5 +14,6 @@ class AnimasuPlugin : Plugin() {
         registerExtractorAPI(Newuservideo())
         registerExtractorAPI(Vidhidepro())
         registerExtractorAPI(Blogger())
+        registerExtractorAPI(MegaNzExtractor())
     }
 }
