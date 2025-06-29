@@ -89,7 +89,15 @@ class Layaranime : MainAPI() {
     ): Boolean {
         val document = app.get(data).document
 
-        // Find the "LINK DOWNLOAD" heading and get all subsequent 'a' tags
+        // Prioritize streaming servers
+        document.select("div.player-nav li a").forEach {
+            val url = it.attr("data-post")
+            if (url.isNotBlank()) {
+                loadExtractor(url, data, subtitleCallback, callback)
+            }
+        }
+
+        // Fallback to download links
         document.select("h4:contains(LINK DOWNLOAD) ~ a").forEach {
             loadExtractor(it.attr("href"), data, subtitleCallback, callback)
         }
