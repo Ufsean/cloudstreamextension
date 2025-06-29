@@ -39,7 +39,7 @@ open class Qiwi : ExtractorApi() {
 open class Blogger : ExtractorApi() {
     override val name = "Blogger"
     override val mainUrl = "https://www.blogger.com"
-    override val requiresReferer = true
+    override val requiresReferer = false
 
     override suspend fun getUrl(
         url: String,
@@ -47,7 +47,7 @@ open class Blogger : ExtractorApi() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ) {
-        with(app.get(url, referer = referer).document) {
+        with(app.get(url).document) {
             this.select("script").map { script ->
                 if (script.data().contains("\"streams\":[")) {
                     val data = script.data().substringAfter("\"streams\":[").substringBefore("]")
@@ -72,7 +72,7 @@ open class Blogger : ExtractorApi() {
     }
 
     private data class ResponseSource(
-        @JsonProperty("play_url") val play_url: String,
-        @JsonProperty("format_id") val format_id: Int
+            @JsonProperty("play_url") val play_url: String,
+            @JsonProperty("format_id") val format_id: Int
     )
 }

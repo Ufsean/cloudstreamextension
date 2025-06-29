@@ -1,6 +1,6 @@
-# IndoStream: Kumpulan Ekstensi CloudStream untuk Konten Indonesia
+# Ufsean Repo: Kumpulan Ekstensi CloudStream untuk Konten Indonesia (Based on IndoStream & Hexated Repo)
 
-IndoStream adalah kumpulan ekstensi CloudStream yang berfokus pada penyediaan konten streaming dari berbagai sumber di Indonesia. Repositori ini berisi ekstensi yang memperluas fungsionalitas aplikasi CloudStream, memungkinkan pengguna untuk menikmati berbagai macam film, serial, dan anime dari situs-situs populer di Indonesia.
+Ufsean Repo adalah kumpulan ekstensi CloudStream yang berfokus pada penyediaan konten streaming dari berbagai sumber di Indonesia. Repositori ini berisi ekstensi yang memperluas fungsionalitas aplikasi CloudStream, memungkinkan pengguna untuk menikmati berbagai macam film, serial, dan anime dari situs-situs populer di Indonesia.
 
 ## Fitur Utama
 
@@ -15,7 +15,7 @@ Berikut adalah daftar ekstensi yang tersedia di repositori IndoStream:
 
 | Nama Ekstensi | Status                            |
 | ------------- | --------------------------------- |
-| Animasu       | Jalan, gambar poster tidak muncul |
+| Animasu       | ✅ Jalan |
 | Animindo      | Error                             |
 | Animesail     | ✅ Jalan                             |
 | Anoboy        | Error                             |
@@ -41,10 +41,9 @@ Berikut adalah daftar ekstensi yang tersedia di repositori IndoStream:
 | Oploverz      | Down                              |
 | Otakudesu     | ✅ Jalan                             |
 | Pencurimovie  | ✅ Jalan                             |
-| Pusatfilm     | The Operation is not implemented  |
 | Raveeflix     | Down                              |
 | Rebahin       | Butuh VPN, Link Error             |
-| Samehadaku    | Butuh VPN                         |
+| Samehadaku    | ✅ Jalan                        |
 | UseeTv        | Error                             |
 
 ## Cara Menggunakan

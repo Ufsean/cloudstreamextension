@@ -7,7 +7,7 @@ import com.lagradost.cloudstream3.*
 
 class Pusatfilm : Gomov() {
 
-    override var mainUrl = "https://pf21.vip"
+    override var mainUrl = "https://pf21.site"
 
     override var name = "Pusatfilm"
     override val mainPage = mainPageOf(

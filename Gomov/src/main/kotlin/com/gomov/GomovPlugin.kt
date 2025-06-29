@@ -11,6 +11,8 @@ class GomovPlugin : Plugin() {
         // All providers should be added in this manner. Please don't edit the providers list
         // directly.
         registerMainAPI(Gomov())
+        registerMainAPI(Pusatfilm())
+        registerMainAPI(Nodrakorid())
         registerExtractorAPI(Chillx())
         registerExtractorAPI(Watchx())
         registerExtractorAPI(Boosterx())
