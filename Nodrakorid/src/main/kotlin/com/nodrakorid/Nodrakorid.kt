@@ -12,7 +12,7 @@ import java.net.URI
 import org.jsoup.nodes.Element
 
 class Nodrakorid : MainAPI() {
-    override var mainUrl = "https://tv.nodrakor22.sbs"
+    override var mainUrl = "https://nodrakor22.store"
     override var name = "Nodrakorid"
     override val supportedTypes = setOf(TvType.Movie)
 
