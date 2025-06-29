@@ -11,5 +11,6 @@ class OploverzPlugin : Plugin() {
         // directly.
         registerMainAPI(Oploverz())
         registerExtractorAPI(Qiwi())
+        registerExtractorAPI(Blogger())
     }
 }

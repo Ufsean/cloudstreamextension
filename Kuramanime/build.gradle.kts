@@ -17,7 +17,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
 }
 // use an integer for version numbers
-version = 39
+version = 40
 
 
 cloudstream {
@@ -25,7 +25,7 @@ cloudstream {
     // All of these properties are optional, you can safely remove them
 
     // description = "Lorem Ipsum"
-     authors = listOf("TeKuma25")
+     authors = listOf("Ufsean")
 
     /**
      * Status int as the following:

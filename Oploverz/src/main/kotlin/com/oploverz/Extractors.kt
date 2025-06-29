@@ -33,3 +33,44 @@ open class Qiwi : ExtractorApi() {
                 ?: Qualities.Unknown.value
     }
 }
+
+open class Blogger : ExtractorApi() {
+    override val name = "Blogger"
+    override val mainUrl = "https://www.blogger.com"
+    override val requiresReferer = true
+
+    override suspend fun getUrl(
+        url: String,
+        referer: String?,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ) {
+        with(app.get(url, referer = referer).document) {
+            this.select("script").map { script ->
+                if (script.data().contains("\"streams\":[")) {
+                    val data = script.data().substringAfter("\"streams\":[").substringBefore("]")
+                    tryParseJson<List<ResponseSource>>("[$data]")?.map { source ->
+                        val quality = when (source.format_id) {
+                            18 -> 360
+                            22 -> 720
+                            else -> Qualities.Unknown.value
+                        }
+                        callback.invoke(
+                            newExtractorLink(
+                                name,
+                                name,
+                                source.play_url,
+                                type = ExtractorLinkType.VIDEO
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private data class ResponseSource(
+        @JsonProperty("play_url") val play_url: String,
+        @JsonProperty("format_id") val format_id: Int
+    )
+}

@@ -7,7 +7,7 @@ import com.lagradost.cloudstream3.utils.*
 import org.jsoup.nodes.Element
 
 class Oploverz : MainAPI() {
-    override var mainUrl = "https://oploverz.media"
+    override var mainUrl = "https://www.oploverz.now"
     override var name = "Oploverz"
     override val hasMainPage = true
     override var lang = "id"
@@ -180,7 +180,12 @@ class Oploverz : MainAPI() {
                                         .select("iframe")
                                         .attr("src")
 
-                        loadExtractor(fixUrl(iframe), "$mainUrl/", subtitleCallback, callback)
+                        if (iframe.contains("blogger.com")) {
+                            val extractor = Blogger()
+                            extractor.getUrl(fixUrl(iframe), "$mainUrl/", subtitleCallback, callback)
+                        } else {
+                            loadExtractor(fixUrl(iframe), "$mainUrl/", subtitleCallback, callback)
+                        }
                     }
                 },
                 {
