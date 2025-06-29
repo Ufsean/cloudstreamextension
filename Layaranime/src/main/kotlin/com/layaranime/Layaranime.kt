@@ -56,10 +56,10 @@ class Layaranime : MainAPI() {
     override suspend fun load(url: String): LoadResponse {
         val document = app.get(url).document
 
-        val title = document.selectFirst("h1.entry-title")?.text()?.trim() ?: "No Title"
+        val title = document.selectFirst("div.entry-header h1")?.text()?.trim() ?: "No Title"
         val posterUrl = document.selectFirst("div.thumb img")?.attr("src")
-        val plot = document.select("b:contains(Synopsis) + p")?.text() ?: document.select("div.entry-content p").joinToString("\n") { it.text() }
-        val tags = document.select("div.genre-info a, span:contains(Genre) ~ a").map { it.text() }
+        val plot = document.select("div.entry-content").text()
+        val tags = document.select("span:contains(Genre) ~ a").map { it.text() }
 
         val episodes = document.select("div.episode .grid a").map {
             val href = it.attr("href")
