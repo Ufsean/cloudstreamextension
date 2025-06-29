@@ -1,13 +1,12 @@
-package com.layaranime
+package com.nontonanimeidboats
 
 import com.lagradost.cloudstream3.*
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.*
 import org.jsoup.nodes.Element
 
-class Layaranime : MainAPI() {
-    override var mainUrl = "https://layaranime.com"
-    override var name = "Layaranime"
+class NontonanimeidBoats : MainAPI() {
+    override var mainUrl = "https://s7.nontonanimeid.boats"
+    override var name = "Nonton AnimeID"
     override val hasMainPage = true
     override var lang = "id"
     override val supportedTypes = setOf(TvType.Anime)
@@ -33,7 +32,6 @@ class Layaranime : MainAPI() {
         val href = this.selectFirst("a")?.attr("href") ?: return null
         val posterUrl = this.selectFirst("img")?.attr("src")
 
-        // Distinguish between series and episodes
         return if (href.contains("-episode-")) {
             newAnimeSearchResponse(title, href, TvType.Anime) {
                 this.posterUrl = posterUrl
@@ -62,10 +60,10 @@ class Layaranime : MainAPI() {
         val plot = document.select("div.entry-content p").joinToString("\n") { it.text() }
         val tags = document.select("div.genre-info a").map { it.text() }
 
-        val episodes = document.select("div.grid a").map {
+        val episodes = document.select("div.eplister li a").map {
             val href = it.attr("href")
-            val name = "Episode ${it.text()}"
-            val episodeNumber = it.text().toIntOrNull()
+            val name = it.selectFirst(".epnum")?.text() ?: it.text()
+            val episodeNumber = name.substringAfter("Episode").trim().toIntOrNull()
             Episode(
                 data = href,
                 name = name,
@@ -88,16 +86,7 @@ class Layaranime : MainAPI() {
     ): Boolean {
         val document = app.get(data).document
 
-        // Prioritize streaming servers
-        document.select("div.player-nav li a").forEach {
-            val url = it.attr("data-post")
-            if (url.isNotBlank()) {
-                loadExtractor(url, data, subtitleCallback, callback)
-            }
-        }
-
-        // Fallback to download links
-        document.select("h4:contains(LINK DOWNLOAD) ~ a").forEach {
+        document.select("div.download-eps a").forEach {
             loadExtractor(it.attr("href"), data, subtitleCallback, callback)
         }
 
