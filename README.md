@@ -16,7 +16,7 @@ Berikut adalah daftar ekstensi yang tersedia di repositori IndoStream:
 | Nama Ekstensi | Status                            |
 | ------------- | --------------------------------- |
 | Animasu       | ✅ Jalan |
-| Animindo      | Error                             |
+| AnimeIndo      | Error                             |
 | Animesail     | ✅ Jalan                             |
 | Anoboy        | Error                             |
 | Dramaid       | Link Error. Oppadrama jalan       |
@@ -31,6 +31,7 @@ Berikut adalah daftar ekstensi yang tersedia di repositori IndoStream:
 | Kuramanime    | Butuh VPN, Link Error             |
 | Kuronime      | Link Error                        |
 | LayarKaca     | ✅ Jalan                             |
+| LayarAnime     | ✅ Jalan                             |
 | Minioppai     | Error                             |
 | Nekopoi       | Butuh VPN                         |
 | Neonime       | Error                             |
