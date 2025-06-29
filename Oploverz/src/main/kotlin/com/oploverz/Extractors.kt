@@ -1,8 +1,10 @@
 package com.oploverz
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.utils.*
+import com.lagradost.cloudstream3.utils.AppUtils.tryParseJson
 
 open class Qiwi : ExtractorApi() {
     override val name = "Qiwi"
