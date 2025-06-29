@@ -13,16 +13,20 @@ class Layaranime : MainAPI() {
     override val supportedTypes = setOf(TvType.Anime)
 
     override val mainPage = mainPageOf(
-        "anime-episode-terbaru/page/%d/" to "Anime Episode Terbaru",
-        "donghua-episode-terbaru/page/%d/" to "Donghua Episode Terbaru",
-        "page/%d/" to "Anime Terbaru",
+        "anime-episode-terbaru/" to "Anime Episode Terbaru",
+        "donghua-episode-terbaru/" to "Donghua Episode Terbaru",
+        "" to "Anime Terbaru",
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val url = "$mainUrl/${request.data.format(page)}"
+        val url = if (request.data.isBlank()) {
+            "$mainUrl/page/$page/"
+        } else {
+            "$mainUrl/${request.data}page/$page/"
+        }
         val document = app.get(url).document
 
-        val home = document.select("div.grid article").mapNotNull {
+        val home = document.select("article").mapNotNull {
             it.toSearchResult()
         }
         return newHomePageResponse(request.name, home)
@@ -30,13 +34,14 @@ class Layaranime : MainAPI() {
 
     private fun Element.toSearchResult(): SearchResponse? {
         val titleElement = this.selectFirst("h4 a")
-        val title = titleElement?.text()?.trim() ?: return null
+        var title = titleElement?.text()?.trim() ?: return null
         var href = this.selectFirst("a")?.attr("href") ?: return null
         val posterUrl = this.selectFirst("img")?.attr("src")
 
-        // If the link is to an episode, convert it to the main series URL
+        // If the link is to an episode, convert it to the main series URL and clean the title
         if (href.contains("-episode-")) {
             href = href.substringBefore("-episode-") + "/"
+            title = title.substringBefore(" Episode").trim()
         }
 
         return newAnimeSearchResponse(title, href, TvType.Anime) {
@@ -56,10 +61,10 @@ class Layaranime : MainAPI() {
     override suspend fun load(url: String): LoadResponse {
         val document = app.get(url).document
 
-        val title = document.selectFirst("div.entry-header h1")?.text()?.trim() ?: "No Title"
+        val title = document.selectFirst("h1.entry-title")?.text()?.trim() ?: "No Title"
         val posterUrl = document.selectFirst("div.thumb img")?.attr("src")
-        val plot = document.select("div.entry-content").text()
-        val tags = document.select("span:contains(Genre) ~ a").map { it.text() }
+        val plot = document.select("div.entry-content p").joinToString("\n") { it.text() }
+        val tags = document.select("div.genre-info a").map { it.text() }
 
         val episodes = document.select("div.episode .grid a").map {
             val href = it.attr("href")
@@ -86,16 +91,16 @@ class Layaranime : MainAPI() {
     ): Boolean {
         val document = app.get(data).document
 
-        // Prioritize streaming servers
-        document.select("div.player-nav li a").forEach {
+        // Find streaming servers
+        document.select("div.player-nav li a, ul.player-nav li a").forEach {
             val url = it.attr("data-post")
             if (url.isNotBlank()) {
                 loadExtractor(url, data, subtitleCallback, callback)
             }
         }
 
-        // Fallback to download links
-        document.select("h4:contains(LINK DOWNLOAD) ~ a").forEach {
+        // Find download links
+        document.select("div.download-eps a, h4:contains(LINK DOWNLOAD) ~ a").forEach {
             loadExtractor(it.attr("href"), data, subtitleCallback, callback)
         }
 
