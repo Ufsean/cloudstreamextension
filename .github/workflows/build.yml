@@ -23,8 +23,10 @@ jobs:
           path: "src"
 
       - name: Prepare builds directory and checkout builds branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git clone https://github.com/${{ github.repository }} builds
+          git clone https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} builds
           cd builds
           if git ls-remote --exit-code --heads origin builds; then
             git checkout builds
