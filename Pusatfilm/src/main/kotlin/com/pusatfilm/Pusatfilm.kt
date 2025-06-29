@@ -167,7 +167,20 @@ class Pusatfilm : MainAPI() {
                             .filter { it.episode != null }
                 }
             }
-        }!!
+                        }!!
+    }
+
+    override suspend fun loadLinks(
+        data: String,
+        isCasting: Boolean,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ): Boolean {
+        val document = app.get(data).document
+        document.select("iframe").getIframeAttr()?.let {
+            loadExtractor(it, data, subtitleCallback, callback)
+        }
+        return true
     }
 
     private fun Element.getImageAttr(): String {

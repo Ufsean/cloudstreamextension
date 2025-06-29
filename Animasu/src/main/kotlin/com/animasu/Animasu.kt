@@ -9,7 +9,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
 class Animasu : MainAPI() {
-    override var mainUrl = "https://v1.animasu.top/"
+    override var mainUrl = "https://v1.animasu.top"
     override var name = "Animasu"
     override val hasMainPage = true
     override var lang = "id"
@@ -148,40 +148,23 @@ class Animasu : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         val document = app.get(data).document
-        document.select("div.mirror > div.player-embed").map {
-            val url = it.select("iframe").attr("src")
-            val source = it.select("span.server-name").text()
-            Triple(url, source, source)
-        }.amap { (url, source, embedName) ->
-            val link = url.fixIframe()
-            if (link.contains("berkasdrive")) {
-                val script = app.get(link).document.select("script:containsData(var Berkasedia = {)")
-                    .firstOrNull()?.data()
-                val videoUrl = Regex("file\":\"(.*?)\"").find(script.toString())?.groupValues?.get(1)
-                callback.invoke(
-                    newExtractorLink(
-                        source,
-                        embedName,
-                        videoUrl.toString(),
-                        type = ExtractorLinkType.M3U8
-                    )
-                )
-            } else if (link.contains("mega.nz")) {
-                val extractor = MegaNzExtractor()
-                extractor.getUrl(link, data, subtitleCallback, callback)
-            } else {
-                loadExtractor(link, data, subtitleCallback, callback)
+        val sources = mutableListOf<String>()
+        document.select("select.mirror > option").forEach {
+            val value = it.attr("value")
+            if (value.isNotBlank()) {
+                val decoded = base64Decode(value)
+                val url = Regex("""src="([^"]+)"""").find(decoded)?.groupValues?.get(1)
+                if (url != null) {
+                    sources.add(url)
+                }
             }
         }
-        return true
-    }
 
-    private fun String.fixIframe(): String {
-        return if (this.startsWith("https://dl.berkasdrive.com")) {
-            base64Decode(this.substringAfter("id="))
-        } else {
-            this
+        sources.apmap {
+            loadExtractor(it, data, subtitleCallback, callback)
         }
+
+        return true
     }
 
     private fun getIndexQuality(str: String?): Int {

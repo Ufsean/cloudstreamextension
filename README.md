@@ -17,20 +17,20 @@ Berikut adalah daftar ekstensi yang tersedia di repositori IndoStream:
 | ------------- | --------------------------------- |
 | Animasu       | Jalan, gambar poster tidak muncul |
 | Animindo      | Error                             |
-| Animesail     | Jalan                             |
+| Animesail     | ✅ Jalan                             |
 | Anoboy        | Error                             |
 | Dramaid       | Link Error. Oppadrama jalan       |
 | DramaSerial   | Error                             |
-| Dubbindo      | Jalan                             |
+| Dubbindo      | ✅ Jalan                             |
 | Dutamovie     | Butuh VPN                         |
-| Funmovieslix  | Jalan                             |
+| Funmovieslix  | ✅ Jalan                             |
 | Gomov         | Butuh VPN, Link Error             |
 | Gomunime      | Down                              |
 | Idlix         | Link Error                        |
-| IndoTV        | Jalan                             |
+| IndoTV        | ✅ Jalan                             |
 | Kuramanime    | Butuh VPN, Link Error             |
 | Kuronime      | Link Error                        |
-| LayarKaca     | Jalan                             |
+| LayarKaca     | ✅ Jalan                             |
 | Minioppai     | Error                             |
 | Nekopoi       | Butuh VPN                         |
 | Neonime       | Error                             |
@@ -39,8 +39,8 @@ Berikut adalah daftar ekstensi yang tersedia di repositori IndoStream:
 | Nodrakorid    | Error tidak bisa diinstal         |
 | NontonAnimeID | Down                              |
 | Oploverz      | Down                              |
-| Otakudesu     | Jalan                             |
-| Pencurimovie  | Jalan                             |
+| Otakudesu     | ✅ Jalan                             |
+| Pencurimovie  | ✅ Jalan                             |
 | Pusatfilm     | The Operation is not implemented  |
 | Raveeflix     | Down                              |
 | Rebahin       | Butuh VPN, Link Error             |
