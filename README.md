@@ -37,7 +37,6 @@ Berikut adalah daftar ekstensi yang tersedia di repositori IndoStream:
 | Neonime       | Error                             |
 | Ngefilm       | Error                             |
 | Nimegami      | Jalan, perlu perbaikan menu       |
-| Nodrakorid    | Error tidak bisa diinstal         |
 | NontonAnimeID | Down                              |
 | Oploverz      | Down                              |
 | Otakudesu     | ✅ Jalan                             |

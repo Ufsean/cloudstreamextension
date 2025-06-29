@@ -62,9 +62,10 @@ class Layaranime : MainAPI() {
         val plot = document.select("div.entry-content p").joinToString("\n") { it.text() }
         val tags = document.select("div.genre-info a").map { it.text() }
 
-        val episodes = document.select("div.eplister li a").map {
-            val href = it.attr("href")
-            val name = it.selectFirst(".epnum")?.text() ?: it.text()
+        val episodes = document.select("div.bixbox.bxcl.epcheck li").map {
+            val link = it.selectFirst("a")
+            val href = link?.attr("href") ?: ""
+            val name = link?.text() ?: ""
             val episodeNumber = name.substringAfter("Episode").trim().toIntOrNull()
             Episode(
                 data = href,
@@ -88,7 +89,8 @@ class Layaranime : MainAPI() {
     ): Boolean {
         val document = app.get(data).document
 
-        document.select("div.download-eps a").forEach {
+        // Find the "LINK DOWNLOAD" heading and get all subsequent 'a' tags
+        document.select("h4:contains(LINK DOWNLOAD) ~ a").forEach {
             loadExtractor(it.attr("href"), data, subtitleCallback, callback)
         }
 
