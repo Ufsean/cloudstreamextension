@@ -7,7 +7,7 @@ cloudstream {
     // All of these properties are optional, you can safely remove them
 
     description = "Include: Oppadrama"
-     authors = listOf("Hexated", "TeKuma25")
+     authors = listOf("Hexated", "TeKuma25", "Ufsean")
 
     /**
      * Status int as the following:

@@ -13,7 +13,7 @@ import com.lagradost.cloudstream3.utils.newExtractorLink
 import org.jsoup.Jsoup
 
 class Gomunime : MainAPI() {
-    override var mainUrl = "https://gomunime.co"
+    override var mainUrl = "https://gomunime.is"
     override var name = "Gomunime"
     override val hasMainPage = true
     override var lang = "id"
@@ -27,7 +27,7 @@ class Gomunime : MainAPI() {
 
     companion object {
 
-        private const val mainServer = "https://gomunime.co"
+        private const val mainServer = "https://gomunime.is"
 
         fun getType(t: String): TvType {
             return if (t.contains("OVA") || t.contains("Special")) TvType.OVA

@@ -6,7 +6,7 @@ cloudstream {
 
     description = "Nodrakorid"
     language = "id"
-    authors = listOf("Hexated", "TeKuma25")
+    authors = listOf("Hexated", "TeKuma25", "Ufsean")
 
     /**
      * Status int as the following:

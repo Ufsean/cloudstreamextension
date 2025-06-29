@@ -6,7 +6,7 @@ cloudstream {
     // All of these properties are optional, you can safely remove them
     language = "id"
     description = "Indo IPTV"
-    authors = listOf("TeKuma25")
+    authors = listOf("TeKuma25", "Ufsean")
 
     /**
      * Status int as the following:

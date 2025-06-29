@@ -1,13 +1,13 @@
 import org.jetbrains.kotlin.konan.properties.Properties
 
 // use an integer for version numbers
-version = 2
+version = 3
 
 cloudstream {
     // All of these properties are optional, you can safely remove them
     description = "Pusatfilm is a plugin that provides streaming links for movies and TV series."
     language = "id"
-    authors = listOf("Hexated", "TeKuma25")
+    authors = listOf("Hexated", "TeKuma25", "Ufsean")
 
     /**
      * Status int as the following:
