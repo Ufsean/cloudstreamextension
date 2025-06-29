@@ -30,14 +30,13 @@ class Layaranime : MainAPI() {
 
     private fun Element.toSearchResult(): SearchResponse? {
         val titleElement = this.selectFirst("h4 a")
-        var title = titleElement?.text()?.trim() ?: return null
+        val title = titleElement?.text()?.trim() ?: return null
         var href = this.selectFirst("a")?.attr("href") ?: return null
         val posterUrl = this.selectFirst("img")?.attr("src")
 
         // If the link is to an episode, convert it to the main series URL
         if (href.contains("-episode-")) {
             href = href.substringBefore("-episode-") + "/"
-            title = title.substringBefore(" Episode")
         }
 
         return newAnimeSearchResponse(title, href, TvType.Anime) {
@@ -57,10 +56,10 @@ class Layaranime : MainAPI() {
     override suspend fun load(url: String): LoadResponse {
         val document = app.get(url).document
 
-        val title = document.selectFirst("h1.entry-title")?.text() ?: "No Title"
+        val title = document.selectFirst("h1.entry-title")?.text()?.trim() ?: "No Title"
         val posterUrl = document.selectFirst("div.thumb img")?.attr("src")
-        val plot = document.select("div.entry-content p").joinToString("\n") { it.text() }
-        val tags = document.select("div.genre-info a").map { it.text() }
+        val plot = document.select("b:contains(Synopsis) + p")?.text() ?: document.select("div.entry-content p").joinToString("\n") { it.text() }
+        val tags = document.select("div.genre-info a, span:contains(Genre) ~ a").map { it.text() }
 
         val episodes = document.select("div.episode .grid a").map {
             val href = it.attr("href")
