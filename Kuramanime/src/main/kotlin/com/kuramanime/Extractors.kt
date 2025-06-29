@@ -132,3 +132,37 @@ open class Kuramadrive : ExtractorApi() {
             @JsonProperty("url") val url: String,
     )
 }
+
+class FilemoonExtractor : ExtractorApi() {
+    override val name = "Filemoon"
+    override val mainUrl = "https://filemoon.sx"
+    override val requiresReferer = true
+
+    override suspend fun getUrl(
+        url: String,
+        referer: String?,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ) {
+        val req = app.get(url, referer = referer)
+        val doc = req.document
+
+        // The m3u8 URL is usually in a script tag or source tag; parse accordingly
+        val scriptText = doc.select("script:containsData(m3u8)").joinToString(" ") { it.data() }
+        val m3u8Regex = Regex("""https?://[^\s'"]+\.m3u8[^\s'"]*""")
+        val m3u8Url = m3u8Regex.find(scriptText)?.value
+
+        if (m3u8Url != null) {
+            callback.invoke(
+                newExtractorLink(
+                    name,
+                    name,
+                    m3u8Url,
+                ) {
+                    this.referer = referer ?: mainUrl
+                    this.quality = Qualities.Unknown.value
+                }
+            )
+        }
+    }
+}

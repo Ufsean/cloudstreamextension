@@ -8,7 +8,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
 class Kuramanime : MainAPI() {
-    override var mainUrl = "https://v8.kuramanime.run"
+    override var mainUrl = "https://v8.kuramanime.run/"
     override var name = "Kuramanime"
     override val hasQuickSearch = false
     override val hasMainPage = true
@@ -33,11 +33,11 @@ class Kuramanime : MainAPI() {
 
     override val mainPage =
             mainPageOf(
-                    "$mainUrl/anime/ongoing?order_by=updated&page=" to "Sedang Tayang",
-                    "$mainUrl/anime/finished?order_by=updated&page=" to "Selesai Tayang",
+                    "$mainUrl/quick/ongoing?order_by=updated&page=" to "Sedang Tayang",
+                    "$mainUrl/quick/finished?order_by=updated&page=" to "Selesai Tayang",
                     "$mainUrl/properties/season/summer-2022?order_by=most_viewed&page=" to
                             "Dilihat Terbanyak Musim Ini",
-                    "$mainUrl/anime/movie?order_by=updated&page=" to "Film Layar Lebar",
+                    "$mainUrl/quick/movie?order_by=updated&page=" to "Film Layar Lebar",
             )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
@@ -180,7 +180,11 @@ class Kuramanime : MainAPI() {
             subtitleCallback: (SubtitleFile) -> Unit,
             callback: (ExtractorLink) -> Unit
     ): Boolean {
-
+        if (data.contains("filemoon")) {
+            val extractor = FilemoonExtractor()
+            extractor.getUrl(data, mainUrl, subtitleCallback, callback)
+            return true
+        }
         return true
     }
 }
