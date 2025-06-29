@@ -33,6 +33,8 @@ jobs:
           else
             git checkout --orphan builds
             git rm -rf .
+            git config user.email "actions@github.com"
+            git config user.name "GitHub Actions"
             git commit --allow-empty -m "Initialize builds branch"
             git push origin builds
           fi
