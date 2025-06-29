@@ -177,7 +177,7 @@ class Pusatfilm : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         val document = app.get(data).document
-        document.select("iframe").getIframeAttr()?.let {
+        document.selectFirst("iframe")?.getIframeAttr()?.let {
             loadExtractor(it, data, subtitleCallback, callback)
         }
         return true
