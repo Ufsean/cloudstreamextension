@@ -55,10 +55,10 @@ class Layaranime : MainAPI() {
         val plot = document.select("div.entry-content p").joinToString("\n") { it.text() }
         val tags = document.select("div.genre-info a").map { it.text() }
 
-        val episodes = document.select("div.grid a").map {
+        val episodes = document.select("div.episode .grid a").map {
             val href = it.attr("href")
-            val name = "Episode ${it.text()}"
-            val episodeNumber = it.text().toIntOrNull()
+            val name = "Episode ${it.text().trim()}"
+            val episodeNumber = it.text().trim().toIntOrNull()
             newEpisode(href) {
                 this.name = name
                 this.episode = episodeNumber
