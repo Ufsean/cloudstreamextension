@@ -29,9 +29,16 @@ class Layaranime : MainAPI() {
     }
 
     private fun Element.toSearchResult(): SearchResponse? {
-        val title = this.selectFirst("h4")?.text()?.trim() ?: return null
-        val href = this.selectFirst("a")?.attr("href") ?: return null
+        val titleElement = this.selectFirst("h4 a")
+        var title = titleElement?.text()?.trim() ?: return null
+        var href = this.selectFirst("a")?.attr("href") ?: return null
         val posterUrl = this.selectFirst("img")?.attr("src")
+
+        // If the link is to an episode, convert it to the main series URL
+        if (href.contains("-episode-")) {
+            href = href.substringBefore("-episode-") + "/"
+            title = title.substringBefore(" Episode")
+        }
 
         return newAnimeSearchResponse(title, href, TvType.Anime) {
             this.posterUrl = posterUrl
