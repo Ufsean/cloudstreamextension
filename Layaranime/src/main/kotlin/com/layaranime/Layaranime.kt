@@ -22,26 +22,19 @@ class Layaranime : MainAPI() {
         val url = "$mainUrl/${request.data.format(page)}"
         val document = app.get(url).document
 
-        val home = document.select("article").mapNotNull {
+        val home = document.select("div.grid article").mapNotNull {
             it.toSearchResult()
         }
         return newHomePageResponse(request.name, home)
     }
 
     private fun Element.toSearchResult(): SearchResponse? {
-        val title = this.selectFirst("h4 a")?.text() ?: return null
+        val title = this.selectFirst("h4")?.text()?.trim() ?: return null
         val href = this.selectFirst("a")?.attr("href") ?: return null
         val posterUrl = this.selectFirst("img")?.attr("src")
 
-        // Distinguish between series and episodes
-        return if (href.contains("-episode-")) {
-            newAnimeSearchResponse(title, href, TvType.Anime) {
-                this.posterUrl = posterUrl
-            }
-        } else {
-            newAnimeSearchResponse(title, href, TvType.Anime) {
-                this.posterUrl = posterUrl
-            }
+        return newAnimeSearchResponse(title, href, TvType.Anime) {
+            this.posterUrl = posterUrl
         }
     }
 
@@ -66,11 +59,10 @@ class Layaranime : MainAPI() {
             val href = it.attr("href")
             val name = "Episode ${it.text()}"
             val episodeNumber = it.text().toIntOrNull()
-            Episode(
-                data = href,
-                name = name,
-                episode = episodeNumber
-            )
+            newEpisode(href) {
+                this.name = name
+                this.episode = episodeNumber
+            }
         }.reversed()
 
         return newTvSeriesLoadResponse(title, url, TvType.Anime, episodes) {
