@@ -52,7 +52,7 @@ Berikut adalah daftar ekstensi yang tersedia di repositori IndoStream:
 1.  Buka aplikasi CloudStream.
 2.  Buka menu "Ekstensi".
 3.  Klik tombol "Tambahkan Repositori".
-4.  Masukkan URL repositori IndoStream: https://raw.githubusercontent.com/TeKuma25/IndoStream/builds/repo.json
+4.  Masukkan URL repositori CloudStreamExtension: https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/repo.json
 5.  Klik "Tambahkan".
 6.  Ekstensi yang tersedia akan muncul di daftar.
 7.  Pilih ekstensi yang ingin Anda instal dan klik "Instal".
