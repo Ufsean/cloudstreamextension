@@ -1,0 +1,650 @@
+[
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=animasu.cc&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 25579,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "OVA",
+            "Anime"
+        ],
+        "version": 13,
+        "internalName": "Animasu",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Animasu.cs3",
+        "name": "Animasu"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=animeindo.xyz&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 15643,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "OVA",
+            "Anime"
+        ],
+        "version": 24,
+        "internalName": "AnimeIndo",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/AnimeIndo.cs3",
+        "name": "AnimeIndo"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=154.26.137.28&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 15536,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 14,
+        "internalName": "AnimeSail",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/AnimeSail.cs3",
+        "name": "AnimeSail"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=ww1.anoboy.app&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 14743,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 1,
+        "internalName": "Anoboy",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Anoboy.cs3",
+        "name": "Anoboy"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=dramaid.nl&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 21428,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "Movie"
+        ],
+        "version": 13,
+        "internalName": "Dramaid",
+        "description": "Include: Oppadrama",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Dramaid.cs3",
+        "name": "Dramaid"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=tv3.dramaserial.id&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 17458,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AsianDrama"
+        ],
+        "version": 8,
+        "internalName": "DramaSerial",
+        "description": "Drama Serial, harus pake vpn",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/DramaSerial.cs3",
+        "name": "DramaSerial"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=www.dubbindo.site&sz=256",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 12533,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie",
+            "Cartoon",
+            "Anime"
+        ],
+        "version": 2,
+        "internalName": "Dubbindo",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Dubbindo.cs3",
+        "name": "Dubbindo"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=scandal.dutamovie21.cc&sz=256",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 16367,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 3,
+        "internalName": "Dutamovie",
+        "description": "DutaMovie",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Dutamovie.cs3",
+        "name": "Dutamovie"
+    },
+    {
+        "iconUrl": "https://raw.githubusercontent.com/phisher98/TVVVV/refs/heads/main/Funmovieslix.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 14417,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Phisher98",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 1,
+        "internalName": "Funmovieslix",
+        "description": "Indonesia Source",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Funmovieslix.cs3",
+        "name": "Funmovieslix"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=gomov.bio&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 35032,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 35,
+        "internalName": "Gomov",
+        "description": "Includes: DutaMovie, Ngefilm, Nodrakorid, Multiplex, Pusatfilm",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Gomov.cs3",
+        "name": "Gomov"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=185.231.223.76&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 18371,
+        "status": 3,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 5,
+        "internalName": "Gomunime",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Gomunime.cs3",
+        "name": "Gomunime"
+    },
+    {
+        "iconUrl": "hhttps://tv7.idlix.asia/wp-content/uploads/2020/07/logov4.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 29167,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie",
+            "Anime",
+            "AsianDrama"
+        ],
+        "version": 19,
+        "internalName": "Idlix",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Idlix.cs3",
+        "name": "Idlix"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=github.com&sz=%size%",
+        "jarFileSize": 59039,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 15981,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "Live"
+        ],
+        "version": 6,
+        "internalName": "IndoTV",
+        "jarUrl": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/IndoTV.jar",
+        "description": "Indo IPTV",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/IndoTV.cs3",
+        "name": "IndoTV"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=kuramanime.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 31928,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 40,
+        "internalName": "Kuramanime",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Kuramanime.cs3",
+        "name": "Kuramanime"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=kuronime.biz&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 24241,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 21,
+        "internalName": "Kuronime",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Kuronime.cs3",
+        "name": "Kuronime"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=layaranime.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 12428,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "OVA",
+            "Anime"
+        ],
+        "version": 1,
+        "internalName": "Layaranime",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Layaranime.cs3",
+        "name": "Layaranime"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=amp.lk21official.mom&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 20150,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 23,
+        "internalName": "LayarKaca",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/LayarKaca.cs3",
+        "name": "LayarKaca"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=minioppai.org&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 19669,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Sora",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "NSFW"
+        ],
+        "version": 12,
+        "internalName": "Minioppai",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Minioppai.cs3",
+        "name": "Minioppai"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=nekopoi.care&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 22997,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Sora",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "NSFW"
+        ],
+        "version": 8,
+        "internalName": "Nekopoi",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Nekopoi.cs3",
+        "name": "Nekopoi"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=otakupoi.org/neonime&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 15514,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "Movie",
+            "OVA"
+        ],
+        "version": 10,
+        "internalName": "Neonime",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Neonime.cs3",
+        "name": "Neonime"
+    },
+    {
+        "iconUrl": "https://new.ngefilm.site/wp-content/uploads/2022/06/20220602_221251.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 9542,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 2,
+        "internalName": "Ngefilm",
+        "description": "Ngefilm",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Ngefilm.cs3",
+        "name": "Ngefilm"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=nimegami.id&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 21900,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 14,
+        "internalName": "Nimegami",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Nimegami.cs3",
+        "name": "Nimegami"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=s7.nontonanimeid.boats&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 9899,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 1,
+        "internalName": "NontonanimeidBoats",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/NontonanimeidBoats.cs3",
+        "name": "NontonanimeidBoats"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=oploverz.care&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 22184,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 32,
+        "internalName": "Oploverz",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Oploverz.cs3",
+        "name": "Oploverz"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=otakudesu.watch&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 21885,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 16,
+        "internalName": "Otakudesu",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Otakudesu.cs3",
+        "name": "Otakudesu"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ww03.pencurimovie.bond&size=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 12448,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Phisher98",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 4,
+        "internalName": "Pencurimovie",
+        "description": "Pencurimovie ",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Pencurimovie.cs3",
+        "name": "Pencurimovie"
+    },
+    {
+        "iconUrl": "https://raveeflix.my.id/favicon.ico",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 18261,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 4,
+        "internalName": "Raveeflix",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Raveeflix.cs3",
+        "name": "Raveeflix"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=rebahinxxi1.cfd&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 22050,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated",
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "Anime",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 11,
+        "internalName": "Rebahin",
+        "description": "Includes: Cgvindo, Kitanonton",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Rebahin.cs3",
+        "name": "Rebahin"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=https://samehadaku.world&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 17026,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "OVA",
+            "Anime"
+        ],
+        "version": 23,
+        "internalName": "Samehadaku",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/Samehadaku.cs3",
+        "name": "Samehadaku"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=useetv.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Ufsean/cloudstreamextension",
+        "fileSize": 10484,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "TeKuma25",
+            "Ufsean"
+        ],
+        "tvTypes": [
+            "Live"
+        ],
+        "version": 4,
+        "internalName": "UseeTv",
+        "url": "https://raw.githubusercontent.com/Ufsean/cloudstreamextension/builds/UseeTv.cs3",
+        "name": "UseeTv"
+    }
+]
