@@ -124,26 +124,12 @@ class LayarAnime : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         val document = app.get(data).document
-        val sources = mutableListOf<String>()
-        val playerJson = document.selectFirst("div#player[x-data]")?.attr("x-data")
+        val downloadLinks = document.select("a[href*='itadakimasu.semacamcdn.site/download/']")
         
-        if (playerJson != null) {
-            val jsonString = playerJson.substringAfter("playerPage(").substringBeforeLast(")")
-            val cleanedJson = jsonString.trim('\'').replace("\\/", "/")
-            try {
-                val videoData = AppUtils.parseJson<Map<String, List<String>>>(cleanedJson)
-                videoData.values.flatten().forEach { url ->
-                    if (url.isNotBlank()) {
-                        sources.add(url)
-                    }
-                }
-            } catch (e: Exception) {
-                // Do nothing
-            }
-        }
-
-        sources.amap {
-            loadExtractor(it, data, subtitleCallback, callback)
+        downloadLinks.amap { link ->
+            val videoId = link.attr("href").substringAfterLast("/")
+            val filemoonUrl = "https://filemoon.in/embed/$videoId"
+            loadExtractor(filemoonUrl, data, subtitleCallback, callback)
         }
 
         return true
