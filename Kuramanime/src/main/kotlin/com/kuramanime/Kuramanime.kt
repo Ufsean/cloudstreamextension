@@ -4,6 +4,7 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addAniListId
 import com.lagradost.cloudstream3.LoadResponse.Companion.addMalId
 import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.newExtractorLink
 import com.lagradost.cloudstream3.amap
 import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.Jsoup
@@ -185,8 +186,33 @@ class Kuramanime : MainAPI() {
             callback: (ExtractorLink) -> Unit
     ): Boolean {
         val document = app.get(data).document
-        val links = document.select("a.btn.btn-sm.btn-danger").map { it.attr("href") }
 
+        if (data.contains("/episode/")) {
+            // Episode page with video player and sources
+            val videoElement = document.selectFirst("video#player")
+            if (videoElement != null) {
+                val sources = videoElement.select("source")
+                sources.forEach { source ->
+                    val src = source.attr("src")
+                    val size = source.attr("size").toIntOrNull() ?: 0
+                    if (src.isNotBlank()) {
+                        callback.invoke(
+                            newExtractorLink(
+                                name,
+                                "Kuramanime",
+                                src,
+                            ) {
+                                this.quality = size
+                            }
+                        )
+                    }
+                }
+                return true
+            }
+        }
+
+        // Fallback to old method for other pages
+        val links = document.select("a.btn.btn-sm.btn-danger").map { it.attr("href") }
         links.amap { link ->
             loadExtractor(link, data, subtitleCallback, callback)
         }

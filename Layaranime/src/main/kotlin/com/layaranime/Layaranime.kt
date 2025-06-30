@@ -55,7 +55,7 @@ class LayarAnime : MainAPI() {
             mainPageOf(
                     "anime-episode-terbaru/page/" to "Anime Episode Terbaru",
                     "donghua-episode-terbaru/page/" to "Donghua Episode Terbaru",
-                    "page/" to "Anime Terbaru"
+                    "page/" to "Anime Populer"
             )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {

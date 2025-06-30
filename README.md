@@ -33,7 +33,7 @@ Berikut adalah daftar ekstensi yang tersedia di repositori IndoStream:
 | LayarKaca     | ✅ Jalan                             |
 | LayarAnime     | ✅ Jalan                             |
 | Minioppai     | Error                             |
-| Nekopoi       | Butuh VPN                         |
+| Nekopoi       | ✅ Jalan, Butuh VPN                         |
 | Neonime       | Error                             |
 | Ngefilm       | Error                             |
 | Nimegami      | Jalan, perlu perbaikan menu       |
