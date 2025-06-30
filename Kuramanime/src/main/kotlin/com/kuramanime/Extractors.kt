@@ -135,7 +135,7 @@ open class Kuramadrive : ExtractorApi() {
 
 class FilemoonExtractor : ExtractorApi() {
     override val name = "Filemoon"
-    override val mainUrl = "https://filemoon.sx"
+    override val mainUrl = "https://filemoon.in"
     override val requiresReferer = true
 
     override suspend fun getUrl(
@@ -148,6 +148,57 @@ class FilemoonExtractor : ExtractorApi() {
         val doc = req.document
 
         // The m3u8 URL is usually in a script tag or source tag; parse accordingly
+        val scriptText = doc.select("script:containsData(m3u8)").joinToString(" ") { it.data() }
+        val m3u8Regex = Regex("""https?://[^\s'"]+\.m3u8[^\s'"]*""")
+        val m3u8Url = m3u8Regex.find(scriptText)?.value
+
+        if (m3u8Url != null) {
+            callback.invoke(
+                newExtractorLink(
+                    name,
+                    name,
+                    m3u8Url,
+                ) {
+                    this.referer = referer ?: mainUrl
+                    this.quality = Qualities.Unknown.value
+                }
+            )
+        }
+    }
+}
+
+class MegaNzExtractor : ExtractorApi() {
+    override val name = "Mega.nz"
+    override val mainUrl = "https://mega.nz"
+    override val requiresReferer = true
+
+    override suspend fun getUrl(
+        url: String,
+        referer: String?,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ) {
+        // Fetch the embed page and extract the video URL(s)
+        val req = app.get(url, referer = referer)
+        val doc = req.document
+
+        // The video URL might be in a script tag or iframe; parse accordingly
+        val iframeSrc = doc.selectFirst("iframe")?.attr("src")
+        if (iframeSrc != null) {
+            callback.invoke(
+                newExtractorLink(
+                    name,
+                    name,
+                    iframeSrc,
+                ) {
+                    this.referer = referer ?: mainUrl
+                    this.quality = Qualities.Unknown.value
+                }
+            )
+            return
+        }
+
+        // Fallback: try to find m3u8 URL in scripts
         val scriptText = doc.select("script:containsData(m3u8)").joinToString(" ") { it.data() }
         val m3u8Regex = Regex("""https?://[^\s'"]+\.m3u8[^\s'"]*""")
         val m3u8Url = m3u8Regex.find(scriptText)?.value

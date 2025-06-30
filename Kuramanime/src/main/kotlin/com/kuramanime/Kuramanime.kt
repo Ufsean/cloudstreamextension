@@ -192,18 +192,32 @@ class Kuramanime : MainAPI() {
             val videoElement = document.selectFirst("video#player")
             if (videoElement != null) {
                 val sources = videoElement.select("source")
-                sources.forEach { source ->
-                    val src = source.attr("src")
-                    val size = source.attr("size").toIntOrNull() ?: 0
+                if (sources.isNotEmpty()) {
+                    sources.forEach { source ->
+                        val src = source.attr("src")
+                        val size = source.attr("size").toIntOrNull() ?: 0
+                        if (src.isNotBlank()) {
+                            callback.invoke(
+                                newExtractorLink(
+                                    name,
+                                    "Kuramanime",
+                                    src,
+                                ) {
+                                    this.quality = size
+                                }
+                            )
+                        }
+                    }
+                } else {
+                    // Fallback to video src attribute if no source tags
+                    val src = videoElement.attr("src")
                     if (src.isNotBlank()) {
                         callback.invoke(
                             newExtractorLink(
                                 name,
                                 "Kuramanime",
                                 src,
-                            ) {
-                                this.quality = size
-                            }
+                            )
                         )
                     }
                 }

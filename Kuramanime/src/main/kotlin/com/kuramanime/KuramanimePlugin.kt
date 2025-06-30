@@ -15,5 +15,6 @@ class KuramanimePlugin : Plugin() {
         registerExtractorAPI(Kuramadrive())
         registerExtractorAPI(Lbx())
         registerExtractorAPI(FilemoonExtractor())
+        registerExtractorAPI(MegaNzExtractor())
     }
 }
