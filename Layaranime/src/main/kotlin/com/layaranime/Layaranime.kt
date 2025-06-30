@@ -8,16 +8,42 @@ import com.lagradost.cloudstream3.utils.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
+/**
+ * Kelas LayarAnime adalah implementasi dari MainAPI untuk mengambil data anime dari situs layaranime.com.
+ * 
+ * Fungsinya sebagai berikut:
+ * - Mendefinisikan URL utama, nama, bahasa, dan tipe konten yang didukung (Anime, AnimeMovie, OVA).
+ * - Menyediakan fungsi utilitas untuk menentukan tipe anime (getType) dan status penayangan (getStatus) berdasarkan string yang diambil dari situs.
+ * - Mendefinisikan halaman utama (mainPage) yang berisi beberapa kategori anime.
+ * - Mengambil dan mem-parsing halaman utama (getMainPage) untuk menampilkan daftar anime terbaru.
+ * - Mengubah elemen HTML artikel menjadi objek AnimeSearchResponse (toSearchResult).
+ * - Melakukan pencarian anime berdasarkan query (search).
+ * - Mengambil detail lengkap dari sebuah anime, termasuk judul, poster, tahun, tipe, status, sinopsis, genre, dan daftar episode (load).
+ * - Mengambil link streaming dari halaman episode, memproses data JSON yang ada di atribut x-data, dan mengekstrak semua link video yang tersedia (loadLinks).
+ * 
+ * Kelas ini digunakan oleh plugin Cloudstream untuk menampilkan dan memutar anime dari layaranime.com.
+ */
 class LayarAnime : MainAPI() {
+    // URL utama situs
     override var mainUrl = "https://layaranime.com"
+    // Nama provider
     override var name = "LayarAnime"
+    // Menyediakan halaman utama
     override val hasMainPage = true
+    // Bahasa konten
     override var lang = "id"
+    // Mendukung fitur download
     override val hasDownloadSupport = true
 
+    // Tipe konten yang didukung
     override val supportedTypes = setOf(TvType.Anime, TvType.AnimeMovie, TvType.OVA)
 
     companion object {
+        /**
+         * Fungsi untuk menentukan tipe anime berdasarkan string dari situs.
+         * Jika string mengandung "Series" maka dianggap Anime, "Movie" dianggap AnimeMovie,
+         * "OVA" atau "Special" dianggap OVA, selain itu default ke Anime.
+         */
         fun getType(t: String?): TvType {
             if (t == null) return TvType.Anime
             return when {
@@ -28,6 +54,10 @@ class LayarAnime : MainAPI() {
             }
         }
 
+        /**
+         * Fungsi untuk menentukan status penayangan anime.
+         * Jika string mengandung "Ongoing" maka status Ongoing, selain itu Completed.
+         */
         fun getStatus(t: String?): ShowStatus {
             if (t == null) return ShowStatus.Completed
             return when {
@@ -37,13 +67,17 @@ class LayarAnime : MainAPI() {
         }
     }
 
+    // Daftar halaman utama beserta labelnya
     override val mainPage =
             mainPageOf(
-                    "anime-episode-terbaru/page/" to "Anime Episode Terbaru",
-                    "donghua-episode-terbaru/page/" to "Donghua Episode Terbaru",
+                    "/anime-episode-terbaru/page/" to "Anime Episode Terbaru",
+                    "/donghua-episode-terbaru/page/" to "Donghua Episode Terbaru",
                     "/" to "Anime Terbaru"
             )
 
+    /**
+     * Mengambil daftar anime dari halaman utama berdasarkan kategori dan halaman.
+     */
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         val url = "$mainUrl${request.data}$page"
         val document = app.get(url).document
@@ -51,6 +85,9 @@ class LayarAnime : MainAPI() {
         return newHomePageResponse(request.name, home)
     }
 
+    /**
+     * Mengubah elemen HTML artikel menjadi objek AnimeSearchResponse.
+     */
     private fun Element.toSearchResult(): AnimeSearchResponse {
         val href = this.selectFirst("a")!!.attr("href")
         val title = this.selectFirst("h4")!!.text()
@@ -60,6 +97,9 @@ class LayarAnime : MainAPI() {
         }
     }
 
+    /**
+     * Melakukan pencarian anime berdasarkan query.
+     */
     override suspend fun search(query: String): List<SearchResponse> {
         val url = "$mainUrl/?s=$query"
         val document = app.get(url).document
@@ -68,6 +108,9 @@ class LayarAnime : MainAPI() {
         }
     }
 
+    /**
+     * Mengambil detail lengkap dari sebuah anime, termasuk judul, poster, tahun, tipe, status, sinopsis, genre, dan daftar episode.
+     */
     override suspend fun load(url: String): LoadResponse {
         val document = app.get(url).document
 
@@ -99,6 +142,11 @@ class LayarAnime : MainAPI() {
         }
     }
 
+    /**
+     * Mengambil link streaming dari halaman episode.
+     * Data link diambil dari atribut x-data pada elemen div#player, lalu di-parse dari JSON.
+     * Semua link video yang ditemukan akan diproses oleh loadExtractor.
+     */
     override suspend fun loadLinks(
         data: String,
         isCasting: Boolean,
@@ -120,7 +168,7 @@ class LayarAnime : MainAPI() {
                     }
                 }
             } catch (e: Exception) {
-                // Do nothing
+                // Jika gagal parse, tidak melakukan apa-apa
             }
         }
 
