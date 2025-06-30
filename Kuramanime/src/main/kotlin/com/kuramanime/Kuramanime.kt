@@ -188,8 +188,54 @@ class Kuramanime : MainAPI() {
         try {
             val document = app.get(data).document
 
+            // Try to extract from server options first
+            val serverOptions = document.select("select#changeServer option").map { 
+                it.attr("value") to it.text() 
+            }
+
+            if (serverOptions.isNotEmpty()) {
+                // Try Kuramadrive first
+                if (serverOptions.any { it.first == "kuramadrive" }) {
+                    try {
+                        val kdriveUrl = "$mainUrl/api/video?server=kuramadrive&id=${data.substringAfterLast("/")}"
+                        val kdriveResponse = app.get(kdriveUrl)
+                        if (kdriveResponse.text.contains("m3u8")) {
+                            callback.invoke(
+                                newExtractorLink(
+                                    name,
+                                    "Kuramadrive",
+                                    kdriveResponse.text,
+                                ) {
+                                    this.quality = Qualities.Unknown.value
+                                }
+                            )
+                            return true
+                        }
+                    } catch (e: Exception) {
+                        // Fall through to next server
+                    }
+                }
+
+                // Try other servers
+                val supportedServers = listOf("filemoon", "mega", "rpmshare", "streamwish", "vidguard")
+                for (server in supportedServers) {
+                    if (serverOptions.any { it.first == server }) {
+                        try {
+                            val serverUrl = "$mainUrl/api/video?server=$server&id=${data.substringAfterLast("/")}"
+                            val serverResponse = app.get(serverUrl)
+                            if (serverResponse.text.isNotBlank()) {
+                                loadExtractor(serverResponse.text, data, subtitleCallback, callback)
+                                return true
+                            }
+                        } catch (e: Exception) {
+                            continue
+                        }
+                    }
+                }
+            }
+
+            // Fallback to direct video element detection
             if (data.contains("/episode/")) {
-                // Episode page with video player and sources
                 val videoElement = document.selectFirst("video#player")
                 if (videoElement != null) {
                     val sources = videoElement.select("source")
@@ -211,7 +257,6 @@ class Kuramanime : MainAPI() {
                         }
                         return true
                     } else {
-                        // Fallback to video src attribute if no source tags
                         val src = videoElement.attr("src")
                         if (src.isNotBlank()) {
                             callback.invoke(
@@ -227,7 +272,7 @@ class Kuramanime : MainAPI() {
                 }
             }
 
-            // Fallback to old method for other pages
+            // Final fallback to button links
             val links = document.select("a.btn.btn-sm.btn-danger").map { it.attr("href") }
             if (links.isNotEmpty()) {
                 links.amap { link ->
@@ -236,16 +281,9 @@ class Kuramanime : MainAPI() {
                 return true
             }
 
-            // Check if main URL is accessible
-            try {
-                app.get(mainUrl)
-            } catch (e: Exception) {
-                throw ErrorLoadingException("Gagal terhubung ke server Kuramanime. Coba lagi nanti.")
-            }
-
-            return false
+            throw ErrorLoadingException("Tidak dapat menemukan sumber video yang tersedia. Coba ganti server atau coba lagi nanti.")
         } catch (e: Exception) {
-            throw ErrorLoadingException("Tidak dapat memuat link video: ${e.message}")
+            throw ErrorLoadingException("Gagal memuat video: ${e.message ?: "Tidak ada sumber video yang ditemukan"}")
         }
     }
 }

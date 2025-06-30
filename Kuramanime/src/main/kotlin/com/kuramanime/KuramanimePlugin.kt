@@ -16,5 +16,8 @@ class KuramanimePlugin : Plugin() {
         registerExtractorAPI(Lbx())
         registerExtractorAPI(FilemoonExtractor())
         registerExtractorAPI(MegaNzExtractor())
+        registerExtractorAPI(RPMShareExtractor())
+        registerExtractorAPI(StreamWishExtractor())
+        registerExtractorAPI(VidGuardExtractor())
     }
 }
