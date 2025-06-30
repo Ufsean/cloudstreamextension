@@ -1,7 +1,9 @@
 package com.kuramanime
 
 import com.lagradost.cloudstream3.*
+import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.newExtractorLink
 import com.lagradost.cloudstream3.utils.Qualities
 import org.jsoup.Jsoup
 
@@ -10,7 +12,10 @@ class VidGuardExtractor : ExtractorApi() {
     override val mainUrl = "https://vidguard.to"
     override val requiresReferer = true
 
-    override suspend fun getUrl(url: String, referer: String?): List<ExtractorLink>? {
+    override suspend fun getUrl(
+        url: String,
+        referer: String?,
+    ): List<ExtractorLink>? {
         val doc = app.get(url, referer = referer).document
         val script = doc.select("script:containsData(player.on)").first()?.data()
             ?: return null
@@ -19,13 +24,14 @@ class VidGuardExtractor : ExtractorApi() {
             ?: return null
 
         return listOf(
-            ExtractorLink(
+            newExtractorLink(
                 name,
                 name,
                 masterUrl,
-                referer,
-                Qualities.Unknown.value,
-            )
+            ) {
+                this.referer = referer ?: ""
+                this.quality = Qualities.Unknown.value
+            }
         )
     }
 }
