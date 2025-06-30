@@ -4,6 +4,8 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addAniListId
 import com.lagradost.cloudstream3.LoadResponse.Companion.addMalId
 import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.amap
+import com.lagradost.cloudstream3.utils.loadExtractor
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
@@ -132,7 +134,9 @@ class Kuramanime : MainAPI() {
                                                 ?.getOrNull(0)
                                                 ?.toIntOrNull()
                                 val link = it.attr("href")
-                                Episode(link, episode = episode)
+                                newEpisode(link) {
+                                    this.episode = episode
+                                }
                             }
             if (eps.isEmpty()) break else episodes.addAll(eps)
         }
@@ -180,11 +184,13 @@ class Kuramanime : MainAPI() {
             subtitleCallback: (SubtitleFile) -> Unit,
             callback: (ExtractorLink) -> Unit
     ): Boolean {
-        if (data.contains("filemoon")) {
-            val extractor = FilemoonExtractor()
-            extractor.getUrl(data, mainUrl, subtitleCallback, callback)
-            return true
+        val document = app.get(data).document
+        val links = document.select("a.btn.btn-sm.btn-danger").map { it.attr("href") }
+
+        links.amap { link ->
+            loadExtractor(link, data, subtitleCallback, callback)
         }
+
         return true
     }
 }
