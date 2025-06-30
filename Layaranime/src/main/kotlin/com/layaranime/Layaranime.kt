@@ -134,8 +134,7 @@ class LayarAnime : MainAPI() {
                 val videoData = AppUtils.parseJson<Map<String, List<String>>>(cleanedJson)
                 videoData.values.flatten().forEach { url ->
                     if (url.isNotBlank()) {
-                        val iframeUrl = url.replace(Regex("^.*\\?url="), "")
-                        sources.add(iframeUrl)
+                        sources.add(url)
                     }
                 }
             } catch (e: Exception) {
