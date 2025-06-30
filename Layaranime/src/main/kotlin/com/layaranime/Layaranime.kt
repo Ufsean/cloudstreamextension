@@ -123,7 +123,30 @@ class LayarAnime : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        LayarAnimeExtractor().getUrl(data, null, subtitleCallback, callback)
+        val document = app.get(data).document
+        val sources = mutableListOf<String>()
+        val playerJson = document.selectFirst("div#player[x-data]")?.attr("x-data")
+        
+        if (playerJson != null) {
+            val jsonString = playerJson.substringAfter("playerPage(").substringBeforeLast(")")
+            val cleanedJson = jsonString.trim('\'').replace("\\/", "/")
+            try {
+                val videoData = AppUtils.parseJson<Map<String, List<String>>>(cleanedJson)
+                videoData.values.flatten().forEach { url ->
+                    if (url.isNotBlank()) {
+                        val iframeUrl = url.replace(Regex("^.*\\?url="), "")
+                        sources.add(iframeUrl)
+                    }
+                }
+            } catch (e: Exception) {
+                // Do nothing
+            }
+        }
+
+        sources.amap {
+            loadExtractor(it, data, subtitleCallback, callback)
+        }
+
         return true
     }
 }

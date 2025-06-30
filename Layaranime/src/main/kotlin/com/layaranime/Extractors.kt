@@ -2,14 +2,13 @@ package com.layaranime
 
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
-import com.lagradost.cloudstream3.utils.AppUtils
 import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.M3u8Helper
 
-class LayarAnimeExtractor : ExtractorApi() {
-    override val name = "LayarAnime"
-    override val mainUrl = "https://layaranime.com"
+class SemacamCdn : ExtractorApi() {
+    override val name = "SemacamCdn"
+    override val mainUrl = "https://itadakimasu.semacamcdn.site"
     override val requiresReferer = true
 
     override suspend fun getUrl(
@@ -18,23 +17,14 @@ class LayarAnimeExtractor : ExtractorApi() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ) {
-        val document = app.get(url).document
-        val playerJson = document.selectFirst("div#player[x-data]")?.attr("x-data")
-
-        if (playerJson != null) {
-            val jsonString = playerJson.substringAfter("playerPage(").substringBeforeLast(")")
-            val cleanedJson = jsonString.trim('\'').replace("\\/", "/")
-            try {
-                val videoData = AppUtils.parseJson<Map<String, List<String>>>(cleanedJson)
-                videoData.values.flatten().forEach { serverUrl ->
-                    if (serverUrl.isNotBlank()) {
-                        val iframeUrl = serverUrl.replace(Regex("^.*\\?url="), "")
-                        loadExtractor(iframeUrl, url, subtitleCallback, callback)
-                    }
-                }
-            } catch (e: Exception) {
-                // Ignore JSON parsing errors
-            }
+        val document = app.get(url, referer = referer).document
+        val m3u8Link = document.selectFirst("video source")?.attr("src")
+        if (m3u8Link != null) {
+            M3u8Helper.generateM3u8(
+                name,
+                m3u8Link,
+                url
+            ).forEach(callback)
         }
     }
 }
