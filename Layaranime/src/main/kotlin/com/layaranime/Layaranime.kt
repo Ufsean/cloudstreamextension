@@ -1,49 +1,60 @@
 package com.layaranime
 
 import com.lagradost.cloudstream3.*
-import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.LoadResponse.Companion.addAniListId
+import com.lagradost.cloudstream3.LoadResponse.Companion.addMalId
+import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
+import com.lagradost.cloudstream3.utils.*
+import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
-class Layaranime : MainAPI() {
+class LayarAnime : MainAPI() {
     override var mainUrl = "https://layaranime.com"
-    override var name = "Layaranime"
+    override var name = "LayarAnime"
     override val hasMainPage = true
     override var lang = "id"
-    override val supportedTypes = setOf(TvType.Anime)
+    override val hasDownloadSupport = true
 
-    override val mainPage = mainPageOf(
-        "anime-episode-terbaru/" to "Anime Episode Terbaru",
-        "donghua-episode-terbaru/" to "Donghua Episode Terbaru",
-        "" to "Anime Terbaru",
-    )
+    override val supportedTypes = setOf(TvType.Anime, TvType.AnimeMovie, TvType.OVA)
+
+    companion object {
+        fun getType(t: String?): TvType {
+            if (t == null) return TvType.Anime
+            return when {
+                t.contains("Series", true) -> TvType.Anime
+                t.contains("Movie", true) -> TvType.AnimeMovie
+                t.contains("OVA", true) || t.contains("Special", true) -> TvType.OVA
+                else -> TvType.Anime
+            }
+        }
+
+        fun getStatus(t: String?): ShowStatus {
+            if (t == null) return ShowStatus.Completed
+            return when {
+                t.contains("Ongoing", true) -> ShowStatus.Ongoing
+                else -> ShowStatus.Completed
+            }
+        }
+    }
+
+    override val mainPage =
+            mainPageOf(
+                    "anime-episode-terbaru/page/" to "Anime Episode Terbaru",
+                    "donghua-episode-terbaru/page/" to "Donghua Episode Terbaru",
+                    "page/" to "Anime Terbaru"
+            )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val url = if (request.data.isBlank()) {
-            "$mainUrl/page/$page/"
-        } else {
-            "$mainUrl/${request.data}page/$page/"
-        }
+        val url = "$mainUrl${request.data}$page"
         val document = app.get(url).document
-
-        val home = document.select("article").mapNotNull {
-            it.toSearchResult()
-        }
+        val home = document.select("article").map { it.toSearchResult() }
         return newHomePageResponse(request.name, home)
     }
 
-    private fun Element.toSearchResult(): SearchResponse? {
-        val titleElement = this.selectFirst("h4 a")
-        var title = titleElement?.text()?.trim() ?: return null
-        var href = this.selectFirst("a")?.attr("href") ?: return null
+    private fun Element.toSearchResult(): AnimeSearchResponse {
+        val href = this.selectFirst("a")!!.attr("href")
+        val title = this.selectFirst("h4")!!.text()
         val posterUrl = this.selectFirst("img")?.attr("src")
-
-        // If the link is to an episode, convert it to the main series URL and clean the title
-        if (href.contains("-episode-")) {
-            href = href.substringBefore("-episode-") + "/"
-            title = title.substringBefore(" Episode").trim()
-        }
-
         return newAnimeSearchResponse(title, href, TvType.Anime) {
             this.posterUrl = posterUrl
         }
@@ -52,8 +63,7 @@ class Layaranime : MainAPI() {
     override suspend fun search(query: String): List<SearchResponse> {
         val url = "$mainUrl/?s=$query"
         val document = app.get(url).document
-
-        return document.select("article").mapNotNull {
+        return document.select("article").map {
             it.toSearchResult()
         }
     }
@@ -61,23 +71,29 @@ class Layaranime : MainAPI() {
     override suspend fun load(url: String): LoadResponse {
         val document = app.get(url).document
 
-        val title = document.selectFirst("h1.entry-title")?.text()?.trim() ?: "No Title"
-        val posterUrl = document.selectFirst("div.thumb img")?.attr("src")
-        val plot = document.select("div.entry-content p").joinToString("\n") { it.text() }
-        val tags = document.select("div.genre-info a").map { it.text() }
+        val title = document.selectFirst("h1.font-bold")?.text()?.replace("Nonton ", "") ?: ""
+        val poster = document.selectFirst("div.flex-col img")?.attr("src")
+        val year = document.selectFirst("a[href*='/tahun/']")?.text()?.trim()?.toIntOrNull()
+        val typeText = document.select("a[href*='/type/']")?.text()
+        val type = getType(typeText)
 
-        val episodes = document.select("div.episode .grid a").map {
-            val href = it.attr("href")
-            val name = "Episode ${it.text().trim()}"
-            val episodeNumber = it.text().trim().toIntOrNull()
-            newEpisode(href) {
-                this.name = name
-                this.episode = episodeNumber
+        val statusText = document.selectFirst("div.col-span-5 > span")?.text()
+        val status = getStatus(statusText)
+
+        val plot = document.selectFirst("blockquote > div")?.text()
+        val tags = document.select("div.col-span-5 a[href*='/genre/']").map { it.text() }
+
+        val episodes = document.select("div.episode a").map {
+            newEpisode(it.attr("href")) {
+                name = it.text()
             }
         }.reversed()
 
-        return newTvSeriesLoadResponse(title, url, TvType.Anime, episodes) {
-            this.posterUrl = posterUrl
+        return newAnimeLoadResponse(title, url, type) {
+            posterUrl = poster
+            this.year = year
+            addEpisodes(DubStatus.Subbed, episodes)
+            showStatus = status
             this.plot = plot
             this.tags = tags
         }
@@ -90,18 +106,26 @@ class Layaranime : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         val document = app.get(data).document
-
-        // Find streaming servers
-        document.select("div.player-nav li a, ul.player-nav li a").forEach {
-            val url = it.attr("data-post")
-            if (url.isNotBlank()) {
-                loadExtractor(url, data, subtitleCallback, callback)
+        val sources = mutableListOf<String>()
+        val playerJson = document.selectFirst("div#player[x-data]")?.attr("x-data")
+        
+        if (playerJson != null) {
+            val jsonString = playerJson.substringAfter("playerPage(").substringBeforeLast(")")
+            val cleanedJson = jsonString.trim('\'').replace("\\/", "/")
+            try {
+                val videoData = AppUtils.parseJson<Map<String, List<String>>>(cleanedJson)
+                videoData.values.flatten().forEach { url ->
+                    if (url.isNotBlank()) {
+                        sources.add(url)
+                    }
+                }
+            } catch (e: Exception) {
+                // Do nothing
             }
         }
 
-        // Find download links
-        document.select("div.download-eps a, h4:contains(LINK DOWNLOAD) ~ a").forEach {
-            loadExtractor(it.attr("href"), data, subtitleCallback, callback)
+        sources.amap {
+            loadExtractor(it, data, subtitleCallback, callback)
         }
 
         return true
