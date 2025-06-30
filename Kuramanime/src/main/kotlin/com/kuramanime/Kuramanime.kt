@@ -185,52 +185,67 @@ class Kuramanime : MainAPI() {
             subtitleCallback: (SubtitleFile) -> Unit,
             callback: (ExtractorLink) -> Unit
     ): Boolean {
-        val document = app.get(data).document
+        try {
+            val document = app.get(data).document
 
-        if (data.contains("/episode/")) {
-            // Episode page with video player and sources
-            val videoElement = document.selectFirst("video#player")
-            if (videoElement != null) {
-                val sources = videoElement.select("source")
-                if (sources.isNotEmpty()) {
-                    sources.forEach { source ->
-                        val src = source.attr("src")
-                        val size = source.attr("size").toIntOrNull() ?: 0
+            if (data.contains("/episode/")) {
+                // Episode page with video player and sources
+                val videoElement = document.selectFirst("video#player")
+                if (videoElement != null) {
+                    val sources = videoElement.select("source")
+                    if (sources.isNotEmpty()) {
+                        sources.forEach { source ->
+                            val src = source.attr("src")
+                            val size = source.attr("size").toIntOrNull() ?: 0
+                            if (src.isNotBlank()) {
+                                callback.invoke(
+                                    newExtractorLink(
+                                        name,
+                                        "Kuramanime",
+                                        src,
+                                    ) {
+                                        this.quality = size
+                                    }
+                                )
+                            }
+                        }
+                        return true
+                    } else {
+                        // Fallback to video src attribute if no source tags
+                        val src = videoElement.attr("src")
                         if (src.isNotBlank()) {
                             callback.invoke(
                                 newExtractorLink(
                                     name,
                                     "Kuramanime",
                                     src,
-                                ) {
-                                    this.quality = size
-                                }
+                                )
                             )
+                            return true
                         }
                     }
-                } else {
-                    // Fallback to video src attribute if no source tags
-                    val src = videoElement.attr("src")
-                    if (src.isNotBlank()) {
-                        callback.invoke(
-                            newExtractorLink(
-                                name,
-                                "Kuramanime",
-                                src,
-                            )
-                        )
-                    }
+                }
+            }
+
+            // Fallback to old method for other pages
+            val links = document.select("a.btn.btn-sm.btn-danger").map { it.attr("href") }
+            if (links.isNotEmpty()) {
+                links.amap { link ->
+                    loadExtractor(link, data, subtitleCallback, callback)
                 }
                 return true
             }
-        }
 
-        // Fallback to old method for other pages
-        val links = document.select("a.btn.btn-sm.btn-danger").map { it.attr("href") }
-        links.amap { link ->
-            loadExtractor(link, data, subtitleCallback, callback)
-        }
+            // Check if main URL is accessible
+            try {
+                app.get(mainUrl)
+            } catch (e: Exception) {
+                throw ErrorLoadingException("Gagal terhubung ke server Kuramanime. Coba lagi nanti.")
+            }
 
-        return true
+            return false
+        } catch (e: Exception) {
+            throw ErrorLoadingException("Tidak dapat memuat link video: ${e.message}")
+        }
     }
 }
