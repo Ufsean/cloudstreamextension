@@ -5,7 +5,6 @@ import com.lagradost.cloudstream3.LoadResponse.Companion.addAniListId
 import com.lagradost.cloudstream3.LoadResponse.Companion.addMalId
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 import com.lagradost.cloudstream3.utils.*
-import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
 class LayarAnime : MainAPI() {
@@ -17,7 +16,16 @@ class LayarAnime : MainAPI() {
 
     override val supportedTypes = setOf(TvType.Anime, TvType.AnimeMovie, TvType.OVA)
 
+    // Companion object ini berisi dua fungsi utilitas yang digunakan untuk menentukan tipe anime dan status penayangan berdasarkan string input.
     companion object {
+        /**
+         * Fungsi getType digunakan untuk mengidentifikasi tipe anime berdasarkan string yang diberikan.
+         * Jika parameter t bernilai null, maka akan mengembalikan TvType.Anime.
+         * Jika string mengandung kata "Series" (tidak case sensitive), maka dianggap sebagai TvType.Anime.
+         * Jika string mengandung kata "Movie", maka dianggap sebagai TvType.AnimeMovie.
+         * Jika string mengandung "OVA" atau "Special", maka dianggap sebagai TvType.OVA.
+         * Jika tidak ada yang cocok, default-nya akan mengembalikan TvType.Anime.
+         */
         fun getType(t: String?): TvType {
             if (t == null) return TvType.Anime
             return when {
@@ -28,6 +36,12 @@ class LayarAnime : MainAPI() {
             }
         }
 
+        /**
+         * Fungsi getStatus digunakan untuk menentukan status penayangan anime berdasarkan string yang diberikan.
+         * Jika parameter t bernilai null, maka akan mengembalikan ShowStatus.Completed (selesai).
+         * Jika string mengandung kata "Ongoing" (tidak case sensitive), maka statusnya dianggap masih berjalan (ShowStatus.Ongoing).
+         * Jika tidak, maka statusnya dianggap sudah selesai (ShowStatus.Completed).
+         */
         fun getStatus(t: String?): ShowStatus {
             if (t == null) return ShowStatus.Completed
             return when {
@@ -109,30 +123,7 @@ class LayarAnime : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        val document = app.get(data).document
-        val sources = mutableListOf<String>()
-        val playerJson = document.selectFirst("div#player[x-data]")?.attr("x-data")
-        
-        if (playerJson != null) {
-            val jsonString = playerJson.substringAfter("playerPage(").substringBeforeLast(")")
-            val cleanedJson = jsonString.trim('\'').replace("\\/", "/")
-            try {
-                val videoData = AppUtils.parseJson<Map<String, List<String>>>(cleanedJson)
-                videoData.values.flatten().forEach { url ->
-                    if (url.isNotBlank()) {
-                        val iframeUrl = url.replace(Regex("^.*\\?url="), "")
-                        sources.add(iframeUrl)
-                    }
-                }
-            } catch (e: Exception) {
-                // Do nothing
-            }
-        }
-
-        sources.amap {
-            loadExtractor(it, data, subtitleCallback, callback)
-        }
-
+        LayarAnimeExtractor().getUrl(data, null, subtitleCallback, callback)
         return true
     }
 }
