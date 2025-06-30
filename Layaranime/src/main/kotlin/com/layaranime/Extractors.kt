@@ -4,7 +4,7 @@ import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.M3u8Helper
+import com.lagradost.cloudstream3.utils.loadExtractor
 
 class SemacamCdn : ExtractorApi() {
     override val name = "SemacamCdn"
@@ -17,14 +17,10 @@ class SemacamCdn : ExtractorApi() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ) {
-        val document = app.get(url, referer = referer).document
-        val m3u8Link = document.selectFirst("video source")?.attr("src")
-        if (m3u8Link != null) {
-            M3u8Helper.generateM3u8(
-                name,
-                m3u8Link,
-                url
-            ).forEach(callback)
+        val response = app.get(url, referer = referer, allowRedirects = false)
+        val redirectedUrl = response.headers["Location"]
+        if (redirectedUrl != null) {
+            loadExtractor(redirectedUrl, url, subtitleCallback, callback)
         }
     }
 }
